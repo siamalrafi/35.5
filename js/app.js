@@ -7,7 +7,7 @@ const displayData = (data) => {
     const lengthofbook = data.length;
     document.getElementById('numberOfNews').innerText = lengthofbook;
     const bookContainer = document.getElementById('book-container')
-
+    bookContainer.innerHTML = '';
     for (const book of data) {
         const bookDiv = document.createElement('div');
         bookDiv.innerHTML = `
@@ -18,7 +18,7 @@ const displayData = (data) => {
          <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">${book.title}</h5>
-                <p class="card-text">${book.details.slice(0, 200)+'.....'}</p>
+                <p class="card-text">${book.details.slice(0, 200) + '.....'}</p>
                 <div class="container text-center">
                     <div class="row">
                         <div class="col-sm-4">
