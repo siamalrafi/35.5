@@ -25,6 +25,12 @@ const showCatagories = (detail) => {
     const catagoriesLength = detail.length;
     const number = document.getElementById('numberOfNews')
     number.innerText = catagoriesLength;
+    const notFoundMassage = document.getElementById('no-found-massage');
+    if (detail.length === 0) {
+        notFoundMassage.classList.remove('d-none')
+    } else {
+        notFoundMassage.classList.add('d-none')
+    }
 
     const newsDetails = document.getElementById('news-details');
     newsDetails.innerHTML = '';
@@ -66,12 +72,19 @@ const showCatagories = (detail) => {
             </div>
         </div>
     </div>
-
  `;
-        newsDetails.appendChild(div)
+        newsDetails.appendChild(div);
+        const showModalDetails = document.getElementById('modalBody');
+        showModalDetails.innerHTML = `
+        <h4>Title ${details.title}</h4>
+        <br>
+        <h4>Catagory Id ${details.category_id}</h4>
+        <h4>Rating ${details.rating.number}</h4>
+        <h4>Badge ${details.rating.badge}</h4>
+        <h4>Published Date${details.author.published_date}</h4>
+`;
     });
 }
-
 
 
 catagoryLoadData();

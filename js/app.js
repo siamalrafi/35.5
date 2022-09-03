@@ -57,14 +57,3 @@ const displayData = (data) => {
     }
 }
 loadData();
-// blog section
-
-// document.getElementById('blog').addEventListener('click', function () {
-// const blogContainer = document.getElementById('blog-container');
-// blogContainer.innerHTML = `
-
-
-// `
-
-
-// })
