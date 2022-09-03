@@ -1,8 +1,3 @@
-// const catagoryLoadData = () => {
-//     fetch('https://openapi.programming-hero.com/api/news/categories')
-//         .then(res => res.json())
-//         .then(data => displayCatagoryData(data.data.news_category.sort()))
-// };
 const catagoryLoadData = async () => {
     const mianUrl = 'https://openapi.programming-hero.com/api/news/categories'
     try {
@@ -10,16 +5,9 @@ const catagoryLoadData = async () => {
         const data = await res.json();
         displayCatagoryData(data.data.news_category.sort());
     } catch {
-        console.log('ldjfldflsf');
+        console.log('There are an error . ');
     }
-
-
 }
-
-
-
-
-
 
 const displayCatagoryData = data => {
     const newField = document.getElementById('ul-field');
@@ -31,12 +19,17 @@ const displayCatagoryData = data => {
         newField.appendChild(li);
     });
 }
-const categoriesNews = (post) => {
-    const url = (`https://openapi.programming-hero.com/api/news/category/${post}`);
-    fetch(url)
-        .then(res => res.json())
-        .then(data => showCatagories(data.data))
-    toggleSpinner(true)
+const categoriesNews = async (post) => {
+    try {
+        const url = (`https://openapi.programming-hero.com/api/news/category/${post}`);
+        const res = await fetch(url);
+        const data = await res.json();
+        showCatagories(data.data);
+        toggleSpinner(true)
+    } catch {
+        console.log('There are an error');
+    }
+
 };
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
@@ -76,10 +69,10 @@ const showCatagories = (detail) => {
                     <div class="row">
                         <div class="col-sm-4">
                             <img class="img-fluid rounded-circle text-start" height="40px" width="40px"
-                                src="${details.author.img}" alt=""><span>${details.author.name}</span>
+                                src="${details.author.img}" alt=""><span>${details.author.name ? details.author.name : 'Not found'}</span>
                         </div>
                         <div class="col-sm-2">
-                            <i class="fa-sharp fa-solid fa-eye"><span>${details.total_view}</span></i>
+                            <i class="fa-sharp fa-solid fa-eye"><span>${details.total_view ? details.total_view : 'No view'}</span></i>
                         </div>
                         <div class="col-sm-4">
                             <i class="fa-solid text-warning fa-star"></i>
@@ -107,7 +100,7 @@ const showCatagories = (detail) => {
         <h4>Badge ${details.rating.badge}</h4>
         <h4>Published Date${details.author.published_date}</h4>
 `;
-        toggleSpinner(false)
+        toggleSpinner(true)
     });
 }
 categoriesNews('01');
