@@ -10,7 +10,13 @@ const displayCatagoryData = data => {
         li.innerHTML = `
         <span class="btn " onclick="categoriesNews('${catagories.category_id}')">${catagories.category_name} </span>
 `;
-        newField.appendChild(li)
+        newField.appendChild(li);
+
+
+        // toggleSpinner()
+
+
+        toggleSpinner(true)
     });
 }
 
@@ -19,12 +25,27 @@ const categoriesNews = (post) => {
     fetch(url)
         .then(res => res.json())
         .then(data => showCatagories(data.data))
+
+        toggleSpinner(true)
 };
+
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoading) {
+        loaderSection.classList.remove('d-none')
+    } else {
+        loaderSection.classList.add('d-none')
+    }
+
+}
+
 
 const showCatagories = (detail) => {
     const catagoriesLength = detail.length;
     const number = document.getElementById('numberOfNews')
     number.innerText = catagoriesLength;
+
+
     const notFoundMassage = document.getElementById('no-found-massage');
     if (detail.length === 0) {
         notFoundMassage.classList.remove('d-none')
@@ -44,7 +65,7 @@ const showCatagories = (detail) => {
         <div class="col-md-4">
             <img src="${details.image_url}" class="img-fluid rounded-start" alt="...">
         </div>
-         <div class="col-md-8">
+         <div class="ps-3 col-md-8">
             <div class="card-body">
                 <h5 class="card-title">${details.title}</h5>
                 <p class="card-text">${details.details.slice(0, 200) + '.....'}</p>
@@ -83,6 +104,8 @@ const showCatagories = (detail) => {
         <h4>Badge ${details.rating.badge}</h4>
         <h4>Published Date${details.author.published_date}</h4>
 `;
+
+        toggleSpinner(false)
     });
 }
 
