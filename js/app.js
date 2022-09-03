@@ -5,7 +5,6 @@ const loadData = async id => {
 }
 const displayData = (data) => {
     const bookContainer = document.getElementById('book-container')
-
     for (const book of data) {
         const bookDiv = document.createElement('div');
         bookDiv.innerHTML = `
@@ -42,7 +41,6 @@ const displayData = (data) => {
         </div>
     </div>
 `;
-        console.log(book);
         bookContainer.appendChild(bookDiv);
         const detailsDiv = document.getElementById('modalTaitle');
         detailsDiv.innerHTML = `
@@ -50,12 +48,20 @@ const displayData = (data) => {
         <br>
         <h4>Catagory Id ${book.category_id}</h4>
         <h4>Rating ${book.rating.number}</h4>
+        <h4>Badge ${book.rating.badge}</h4>
         <h4>Published Date${book.author.published_date}</h4>
 `;
     }
 }
 loadData();
+// blog section
+
+// document.getElementById('blog').addEventListener('click', function () {
+// const blogContainer = document.getElementById('blog-container');
+// blogContainer.innerHTML = `
 
 
+// `
 
 
+// })
