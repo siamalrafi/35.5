@@ -1,34 +1,43 @@
-const catagoryLoadData = () => {
-    fetch('https://openapi.programming-hero.com/api/news/categories')
-        .then(res => res.json())
-        .then(data => displayCatagoryData(data.data.news_category))
-};
+// const catagoryLoadData = () => {
+//     fetch('https://openapi.programming-hero.com/api/news/categories')
+//         .then(res => res.json())
+//         .then(data => displayCatagoryData(data.data.news_category.sort()))
+// };
+const catagoryLoadData = async () => {
+    const mianUrl = 'https://openapi.programming-hero.com/api/news/categories'
+    try {
+        const res = await fetch(mianUrl);
+        const data = await res.json();
+        displayCatagoryData(data.data.news_category.sort());
+    } catch {
+        console.log('ldjfldflsf');
+    }
+
+
+}
+
+
+
+
+
+
 const displayCatagoryData = data => {
     const newField = document.getElementById('ul-field');
     data.forEach((catagories) => {
         const li = document.createElement('span');
         li.innerHTML = `
-        <span class="btn " onclick="categoriesNews('${catagories.category_id}')">${catagories.category_name} </span>
+        <span class="btn" onclick="categoriesNews('${catagories.category_id}')">${catagories.category_name} </span>
 `;
         newField.appendChild(li);
-
-
-        // toggleSpinner()
-
-
-        toggleSpinner(true)
     });
 }
-
 const categoriesNews = (post) => {
     const url = (`https://openapi.programming-hero.com/api/news/category/${post}`);
     fetch(url)
         .then(res => res.json())
         .then(data => showCatagories(data.data))
-
-        toggleSpinner(true)
+    toggleSpinner(true)
 };
-
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
     if (isLoading) {
@@ -36,31 +45,25 @@ const toggleSpinner = isLoading => {
     } else {
         loaderSection.classList.add('d-none')
     }
-
 }
-
 
 const showCatagories = (detail) => {
     const catagoriesLength = detail.length;
     const number = document.getElementById('numberOfNews')
     number.innerText = catagoriesLength;
 
-
     const notFoundMassage = document.getElementById('no-found-massage');
     if (detail.length === 0) {
-        notFoundMassage.classList.remove('d-none')
+        notFoundMassage.classList.remove('d-none');
     } else {
         notFoundMassage.classList.add('d-none')
     }
-
     const newsDetails = document.getElementById('news-details');
     newsDetails.innerHTML = '';
     detail.forEach(details => {
-
         // console.log(details);
         const div = document.createElement('div');
         div.innerHTML = `
-
         <div class="row g-0 mt-5">
         <div class="col-md-4">
             <img src="${details.image_url}" class="img-fluid rounded-start" alt="...">
@@ -104,11 +107,9 @@ const showCatagories = (detail) => {
         <h4>Badge ${details.rating.badge}</h4>
         <h4>Published Date${details.author.published_date}</h4>
 `;
-
         toggleSpinner(false)
     });
 }
-
-
+categoriesNews('01');
 catagoryLoadData();
 
