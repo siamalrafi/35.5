@@ -18,7 +18,7 @@ const displayData = (data) => {
          <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">${book.title}</h5>
-                <p class="card-text">${book.details.slice(0, 195)}</p>
+                <p class="card-text">${book.details.slice(0, 200)+'.....'}</p>
                 <div class="container text-center">
                     <div class="row">
                         <div class="col-sm-4">
