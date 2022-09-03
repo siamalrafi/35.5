@@ -10,7 +10,6 @@ const displayCatagoryData = data => {
         li.innerHTML = `
         <span class="btn " onclick="categoriesNews('${catagories.category_id}')">${catagories.category_name} </span>
 `;
-
         newField.appendChild(li)
     });
 }
@@ -19,18 +18,22 @@ const categoriesNews = (post) => {
     const url = (`https://openapi.programming-hero.com/api/news/category/${post}`);
     fetch(url)
         .then(res => res.json())
-        .then(data => displayCatagoryDetails(data.data))
+        .then(data => showCatagories(data.data))
 };
 
-const displayCatagoryDetails = (detail) => {
+const showCatagories = (detail) => {
+    const catagoriesLength = detail.length;
+    const number = document.getElementById('numberOfNews')
+    number.innerText = catagoriesLength;
+
     const newsDetails = document.getElementById('news-details');
     newsDetails.innerHTML = '';
     detail.forEach(details => {
-        console.log(details);
+
+        // console.log(details);
         const div = document.createElement('div');
         div.innerHTML = `
-        
-        
+
         <div class="row g-0 mt-5">
         <div class="col-md-4">
             <img src="${details.image_url}" class="img-fluid rounded-start" alt="...">
@@ -38,7 +41,7 @@ const displayCatagoryDetails = (detail) => {
          <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">${details.title}</h5>
-                <p class="card-text">${details.details.slice(0, 200)+'.....'}</p>
+                <p class="card-text">${details.details.slice(0, 200) + '.....'}</p>
                 <div class="container text-center">
                     <div class="row">
                         <div class="col-sm-4">
@@ -63,8 +66,6 @@ const displayCatagoryDetails = (detail) => {
             </div>
         </div>
     </div>
-
-
 
  `;
         newsDetails.appendChild(div)
