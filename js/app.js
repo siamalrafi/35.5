@@ -4,7 +4,10 @@ const loadData = async id => {
     displayData(data.data);
 }
 const displayData = (data) => {
+    const lengthofbook = data.length;
+    document.getElementById('numberOfNews').innerText = lengthofbook;
     const bookContainer = document.getElementById('book-container')
+
     for (const book of data) {
         const bookDiv = document.createElement('div');
         bookDiv.innerHTML = `
