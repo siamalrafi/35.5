@@ -19,28 +19,37 @@ const displayCatagoryData = data => {
         newField.appendChild(li);
     });
 }
+
+
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoading) {
+        loaderSection.classList.remove('d-none');
+    } else {
+        loaderSection.classList.add('d-none');
+    }
+}
+
+
 const categoriesNews = async (post) => {
     try {
         const url = (`https://openapi.programming-hero.com/api/news/category/${post}`);
         const res = await fetch(url);
         const data = await res.json();
-        showCatagories(data.data);
-        toggleSpinner(true)
+        showCatagories(data.data.sort(function (a, b) {
+            return b.total_view - a.total_view;
+        }));
+
     } catch {
         console.log('There are an error');
     }
-
 };
-const toggleSpinner = isLoading => {
-    const loaderSection = document.getElementById('loader');
-    if (isLoading) {
-        loaderSection.classList.remove('d-none')
-    } else {
-        loaderSection.classList.add('d-none')
-    }
-}
+
 
 const showCatagories = (detail) => {
+
+    toggleSpinner(true);
+    console.log(detail);
     const catagoriesLength = detail.length;
     const number = document.getElementById('numberOfNews')
     number.innerText = catagoriesLength;
@@ -91,6 +100,10 @@ const showCatagories = (detail) => {
     </div>
  `;
         newsDetails.appendChild(div);
+        toggleSpinner(false)
+
+
+
         const showModalDetails = document.getElementById('modalBody');
         showModalDetails.innerHTML = `
         <h4>Title ${details.title}</h4>
@@ -100,9 +113,9 @@ const showCatagories = (detail) => {
         <h4>Badge ${details.rating.badge}</h4>
         <h4>Published Date${details.author.published_date}</h4>
 `;
-        toggleSpinner(true)
+
     });
 }
-categoriesNews('01');
+categoriesNews('08');
 catagoryLoadData();
 
